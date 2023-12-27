@@ -2,6 +2,8 @@
 
 `npx create-nx-workspace@latest starship --preset=ts`
 
+`cd starship`
+
 ---
 
 #2 - criacao da lib do CORE:
