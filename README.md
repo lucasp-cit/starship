@@ -30,8 +30,10 @@ TO-DO: We need to create a dev/start/serve script.
 
 `npm install @nx/plugin --save-dev`
 
-`nx g @nx/plugin:plugin` -> used the name "generators" for the created plugin.
+`nx g @nx/plugin:plugin starship-nx-plugin` -> used the name "starship-nx-plugin" for the created plugin.
 
-`nx g @nx/plugin:generator newServerlessHandler` -> used the derived option.
+`nx generate @nx/plugin:generator serverless-handler-generator --project=starship-nx-plugin` -> used the derived option.
 
-#5 - refact
+`nx generate @starship/starship-nx-plugin:serverless-handler-generator <STACK_NAME>`
+
+
