@@ -1,3 +1,7 @@
+#0 - SETUP
+`npm install -g serverless`
+`npm install --global nx@latest`
+
 #1 - creating workspace NX + CORE + SDK libs (https://nx.dev/getting-started/tutorials/integrated-repo-tutorial)
 
 `npx create-nx-workspace@latest starship --preset=ts`
@@ -34,8 +38,28 @@ TO-DO: We need to create a dev/start/serve script.
 
 `nx generate @nx/plugin:generator serverless-handler-generator --project=starship-nx-plugin` -> used the derived option.
 
-`nx generate @starship/starship-nx-plugin:serverless-handler-generator <STACK_NAME>`
-
 TO-DO: check what is the typescript issue in this file:
 starship/starship-nx-plugin/src/generators/serverless-handler-generator/jest-config.ts
+
+---
+
+#5 - creating a stack using the generator
+
+`nx generate @starship/starship-nx-plugin:serverless-handler-generator <STACK_NAME>`
+
+---
+
+6 - Checkout all the Available commands generated in the project.json of the Stack (serve, deploy, etc)
+
+Not sure why, but to run locally on MacOS it was necessary to run the following command:
+
+`npm install -D serverless-esbuild esbuild`
+
+Here is the command used:
+
+`nx run <STACK_NAME>:serve --stage=<STAGE_NAME>`
+
+you can check the lambda returning data by copy/pasting the URL generated on your browser.
+
+
 
