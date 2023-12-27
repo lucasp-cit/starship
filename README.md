@@ -26,4 +26,12 @@ TO-DO: We need to create a dev/start/serve script.
 
 ---
 
-#4 - criacao do nosso code generator (https://nx.dev/core-features/plugin-features/use-code-generators)
+#4 - creating our first code generator (https://nx.dev/extending-nx/recipes/local-generators)
+
+`npm install @nx/plugin --save-dev`
+
+`nx g @nx/plugin:plugin` -> used the name "generators" for the created plugin.
+
+`nx g @nx/plugin:generator newServerlessHandler` -> used the derived option.
+
+#5 - refact

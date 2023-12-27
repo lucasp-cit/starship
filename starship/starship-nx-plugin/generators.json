@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "serverless-handler-generator": {
+      "factory": "./src/generators/serverless-handler-generator/generator",
+      "schema": "./src/generators/serverless-handler-generator/schema.json",
+      "description": "serverless-handler-generator generator"
+    }
+  }
+}

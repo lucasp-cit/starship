@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@starship/core": ["libs/core/src/index.ts"],
-      "@starship/sdk": ["libs/sdk/src/index.ts"]
+      "@starship/sdk": ["libs/sdk/src/index.ts"],
+      "@starship/starship-nx-plugin": ["starship-nx-plugin/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
