@@ -1,25 +1,31 @@
 import {
-  addProjectConfiguration,
   formatFiles,
   generateFiles,
+  installPackagesTask,
+  joinPathFragments,
   Tree,
 } from '@nx/devkit';
-import * as path from 'path';
 import { ServerlessHandlerGeneratorGeneratorSchema } from './schema';
+import { addJest } from './jest-config';
+import { addWorkspaceConfig } from './workspace-config';
 
-export async function serverlessHandlerGeneratorGenerator(
-  tree: Tree,
-  options: ServerlessHandlerGeneratorGeneratorSchema
-) {
-  const projectRoot = `libs/${options.name}`;
-  addProjectConfiguration(tree, options.name, {
-    root: projectRoot,
-    projectType: 'library',
-    sourceRoot: `${projectRoot}/src`,
-    targets: {},
-  });
-  generateFiles(tree, path.join(__dirname, 'files'), projectRoot, options);
-  await formatFiles(tree);
-}
+export default async (host: Tree, schema: ServerlessHandlerGeneratorGeneratorSchema) => {
+  const stackRoot = `stacks/${schema.name}`;
 
-export default serverlessHandlerGeneratorGenerator;
+  generateFiles(
+    host, // the virtual file system
+    joinPathFragments(__dirname, './files'), // path to the file templates
+    stackRoot, // destination path of the files
+    { ...schema, tmpl: '' } // config object to replace variable in file templates
+  );
+
+  addWorkspaceConfig(host, schema.name, stackRoot);
+
+  await addJest(host, schema.name);
+
+  await formatFiles(host);
+
+  return () => {
+    installPackagesTask(host);
+  };
+};

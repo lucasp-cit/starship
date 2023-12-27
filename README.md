@@ -36,4 +36,6 @@ TO-DO: We need to create a dev/start/serve script.
 
 `nx generate @starship/starship-nx-plugin:serverless-handler-generator <STACK_NAME>`
 
+TO-DO: check what is the typescript issue in this file:
+starship/starship-nx-plugin/src/generators/serverless-handler-generator/jest-config.ts
 
