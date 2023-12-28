@@ -19,6 +19,7 @@ type PostType = {
 
 const getConnectionString = () => `${protocol}://${auth}@${host}:${port}`
 
+// conectar
 const searchService = new OpensearchService(getConnectionString())
 
 // const result = await searchService.setDocuments<PostType>("posts-index", posts)
