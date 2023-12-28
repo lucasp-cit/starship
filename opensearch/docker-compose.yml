@@ -1,0 +1,25 @@
+
+services:
+
+  opensearch-node:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch-node
+    environment:
+      - discovery.type=single-node
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node
+      - DISABLE_SECURITY_PLUGIN=true
+      - bootstrap.memory_lock=true
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    networks:
+      - opensearch-net
+    ports:
+      - 9200:9200
+      - 9600:9600
+
+volumes:
+  opensearch-data:
+
+networks:
+  opensearch-net:
