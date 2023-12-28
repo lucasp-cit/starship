@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": ["../../../src/handler.ts"],
+  "mappings": "4ZAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,WAAAE,IAAA,eAAAC,EAAAH,GAEO,IAAME,EAAgC,MAAOE,EAAOC,KAClD,CACL,WAAY,IACZ,KAAM,KAAK,UACT,CACE,QAAS,2CACT,MAAOD,CACT,EACA,KACA,CACF,CACF",
+  "names": ["handler_exports", "__export", "hello", "__toCommonJS", "event", "_context"]
+}
