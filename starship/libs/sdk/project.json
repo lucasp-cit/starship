@@ -14,8 +14,8 @@
         "assets": ["libs/sdk/*.md"]
       }
     },
-    "deploy": {
-      "command": "echo deploying................",
+    "publish": {
+      "command": "node tools/scripts/publish.mjs sdk {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
     "lint": {

@@ -14,8 +14,8 @@
         "assets": ["libs/core/*.md"]
       }
     },
-    "deploy": {
-      "command": "echo deploying................",
+    "publish": {
+      "command": "node tools/scripts/publish.mjs core {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
     "lint": {
