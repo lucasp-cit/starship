@@ -11,10 +11,6 @@ pipeline {
 
                     cd starship
 
-                    node --version
-
-                    npm install
-
                     docker --version
                 '''
             }
