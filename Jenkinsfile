@@ -11,7 +11,7 @@ pipeline {
 
                     cd starship
 
-                    docker --version
+                    npm install
                 '''
             }
         }
