@@ -26,7 +26,7 @@ TO-DO: We need to create a dev/start/serve script.
 
 Exposed some scripts in the package.json (build, deploy, lint and test).
 
-TO-DO: We need to create a dev/start/serve script.
+TO-DO: We need to create a dev/start/serve script...
 
 ---
 
