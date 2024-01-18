@@ -8,10 +8,12 @@ pipeline {
                     echo ".......................Building......................."
                     pwd
                     ls -lah
-                    apt-get update
-                    apt-get -y install docker-ce
+
                     cd starship
 
+                    npm install
+
+                    docker --version
                 '''
             }
         }
