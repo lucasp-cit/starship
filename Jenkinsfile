@@ -5,19 +5,26 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    echo "Building..."
+                    echo ".......................Building......................."
+                    pwd
                     ls -lah
+                    cd starship
+                    npm install
                 '''
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                sh '''
+                    echo ".......................Testing......................."
+                    pwd
+                    ls -lah
+                '''
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo '.......................Deploying.......................'
             }
         }
     }
