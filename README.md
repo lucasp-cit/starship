@@ -10,7 +10,7 @@
 
 ---
 
-#2 - creating lib CORE:
+#2 - creating lib COREe:
 
 `npx nx generate @nx/js:library core --directory=libs/core --publishable --importPath=@starship/core`
 
