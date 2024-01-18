@@ -10,7 +10,7 @@
 
 ---
 
-#2 - creating lib CORE:
+#2 - creating lib COREe:
 
 `npx nx generate @nx/js:library core --directory=libs/core --publishable --importPath=@starship/core`
 
@@ -60,6 +60,3 @@ Here is the command used:
 `nx run <STACK_NAME>:serve --stage=<STAGE_NAME>`
 
 you can check the lambda returning data by copy/pasting the URL generated on your browser.
-
-
-
