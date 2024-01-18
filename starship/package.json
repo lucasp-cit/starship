@@ -2,18 +2,7 @@
   "name": "@starship/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {
-    "nx": "nx",
-    "core:lint": "nx run core:lint",
-    "core:test": "nx run core:test",
-    "core:build": "nx run core:build",
-    "core:publish": "nx run core:publish",
-    "sdk:lint": "nx run sdk:lint",
-    "sdk:test": "nx run sdk:test",
-    "sdk:build": "nx run sdk:build",
-    "sdk:publish": "nx run sdk:publish"
-  },
-  "private": true,
+  "scripts": {},
   "dependencies": {
     "@nx/devkit": "17.2.7",
     "@swc/helpers": "~0.5.2",

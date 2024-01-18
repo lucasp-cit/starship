@@ -11,7 +11,7 @@
         "outputPath": "dist/libs/sdk",
         "main": "libs/sdk/src/index.ts",
         "tsConfig": "libs/sdk/tsconfig.lib.json",
-        "assets": ["libs/sdk/*.md"]
+        "assets": ["libs/sdk/*.md", "{workspaceRoot}/.npmrc"]
       }
     },
     "publish": {
