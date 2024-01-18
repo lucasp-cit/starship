@@ -8,7 +8,10 @@ pipeline {
                     echo ".......................Building......................."
                     pwd
                     ls -lah
+                    apk add nodejs npm
+                    
                     cd starship
+
                     npm install
                 '''
             }
