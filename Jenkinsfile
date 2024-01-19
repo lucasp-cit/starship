@@ -1,19 +1,16 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs'
+        nodejs 'nodejs' // Check the name they set for this tool
     }
     stages {
         stage('Build') {
             steps {
                 sh '''
                     echo ".......................Building......................."
-                    pwd
-                    ls -lah
-
                     cd starship
-
                     npm install
+                    npx nx run core:build
                 '''
             }
         }
@@ -21,14 +18,18 @@ pipeline {
             steps {
                 sh '''
                     echo ".......................Testing......................."
-                    pwd
-                    ls -lah
+                    npx nx run core:test
+                    echo ".......................Linting......................."
+                    npx nx run core:lint
                 '''
             }
         }
         stage('Deploy') {
             steps {
-                echo '.......................Deploying.......................'
+                sh '''
+                    echo ".......................Deploying......................."
+                    npx nx run core:publish
+                '''
             }
         }
     }
