@@ -25,12 +25,44 @@ pipeline {
                 '''
             }
         }
-        stage('Deploy') {
+        stage('Deploy Dev') {
+            input 'Do you want to deploy to Dev?'
+            parameters {
+                string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
+            }
             steps {
                 sh '''
-                    echo ".......................Deploying......................."
+                    echo ".......................Deploying Dev......................."
                     cd starship
-                    npx nx run core:publish
+                    npx nx run core:publish --ver=$VERSION
+                '''
+            }
+        }
+
+        stage('Deploy Staging') {
+            input 'Do you want to deploy to staging?'
+            parameters {
+                string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
+            }
+            steps {
+                sh '''
+                    echo ".......................Deploying Staging......................."
+                    cd starship
+                    npx nx run core:publish --ver=$VERSION
+                '''
+            }
+        }
+
+        stage('Deploy Production') {
+            input 'Do you want to deploy to production?'
+            parameters {
+                string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
+            }
+            steps {
+                sh '''
+                    echo ".......................Deploying Production......................."
+                    cd starship
+                    npx nx run core:publish --ver=$VERSION
                 '''
             }
         }
