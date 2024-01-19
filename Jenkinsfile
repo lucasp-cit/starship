@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'nodejs' // Check the name they set for this tool
     }
+    environment {
+        ARTIFACTORY_CREDENTIALS = credentials('ARTIFACTORY_CREDENTIALS')
+    }
     stages {
         stage('Build') {
             steps {
@@ -34,6 +37,7 @@ pipeline {
                 }
             }
             steps {
+                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
                 sh '''
                     echo ".......................Deploying Dev......................."
                     cd starship
