@@ -18,6 +18,7 @@ pipeline {
             steps {
                 sh '''
                     echo ".......................Testing......................."
+                    cd starship
                     npx nx run core:test
                     echo ".......................Linting......................."
                     npx nx run core:lint
@@ -28,6 +29,7 @@ pipeline {
             steps {
                 sh '''
                     echo ".......................Deploying......................."
+                    cd starship
                     npx nx run core:publish
                 '''
             }
