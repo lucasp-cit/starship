@@ -19,8 +19,8 @@ pipeline {
             }
         }
         stage('Build') {
-            writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
             steps {
+                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
                 sh '''
                     echo ".......................Building......................."
                     cd starship
