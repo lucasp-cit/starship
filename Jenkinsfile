@@ -20,7 +20,6 @@ pipeline {
         }
         stage('Build') {
             steps {
-                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
                 sh '''
                     echo ".......................Building......................."
                     cd starship
@@ -38,10 +37,11 @@ pipeline {
                 }
             }
             steps {
+                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
                 sh '''
                     echo ".......................Deploying Dev......................."
                     cd starship
-                    npx nx run core:publish --ver=$VERSION
+                    npx nx run core:publish --ver=$VERSION --userconfig=$ARTIFACTORY_CREDENTIALS
                 '''
             }
         }
