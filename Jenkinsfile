@@ -26,11 +26,15 @@ pipeline {
             }
         }
         stage('Deploy Dev') {
-            steps {
-                input 'Do you want to deploy to Dev?'
+            input {
+                message "Do you want to deploy to dev?"
+                ok "Yes, we should."
+                submitter "alice,bob"
                 parameters {
                     string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
                 }
+            }
+            steps {
                 sh '''
                     echo ".......................Deploying Dev......................."
                     cd starship
@@ -41,10 +45,6 @@ pipeline {
 
         stage('Deploy Staging') {
             steps {
-                input 'Do you want to deploy to staging?'
-                parameters {
-                    string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
-                }
                 sh '''
                     echo ".......................Deploying Staging......................."
                     cd starship
@@ -55,10 +55,6 @@ pipeline {
 
         stage('Deploy Production') {
             steps {
-                input 'Do you want to deploy to production?'
-                parameters {
-                    string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
-                }
                 sh '''
                     echo ".......................Deploying Production......................."
                     cd starship
