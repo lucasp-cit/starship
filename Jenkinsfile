@@ -7,16 +7,6 @@ pipeline {
         ARTIFACTORY_CREDENTIALS = credentials('ARTIFACTORY_CREDENTIALS')
     }
     stages {
-        stage('Build') {
-            steps {
-                sh '''
-                    echo ".......................Building......................."
-                    cd starship
-                    npm install
-                    npx nx run core:build
-                '''
-            }
-        }
         stage('Test') {
             steps {
                 sh '''
@@ -25,6 +15,17 @@ pipeline {
                     npx nx run core:test
                     echo ".......................Linting......................."
                     npx nx run core:lint
+                '''
+            }
+        }
+        stage('Build') {
+            writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
+            steps {
+                sh '''
+                    echo ".......................Building......................."
+                    cd starship
+                    npm install
+                    npx nx run core:build
                 '''
             }
         }
@@ -37,7 +38,6 @@ pipeline {
                 }
             }
             steps {
-                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
                 sh '''
                     echo ".......................Deploying Dev......................."
                     cd starship
