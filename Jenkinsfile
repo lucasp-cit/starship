@@ -26,8 +26,8 @@ pipeline {
             }
         }
         stage('Deploy Dev') {
-            input 'Do you want to deploy to Dev?'
             steps {
+                input 'Do you want to deploy to Dev?'
                 parameters {
                     string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
                 }
@@ -40,8 +40,8 @@ pipeline {
         }
 
         stage('Deploy Staging') {
-            input 'Do you want to deploy to staging?'
             steps {
+                input 'Do you want to deploy to staging?'
                 parameters {
                     string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
                 }
@@ -54,8 +54,8 @@ pipeline {
         }
 
         stage('Deploy Production') {
-            input 'Do you want to deploy to production?'
             steps {
+                input 'Do you want to deploy to production?'
                 parameters {
                     string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
                 }
