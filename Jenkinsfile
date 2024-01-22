@@ -8,15 +8,15 @@ node() {
 
     try {
         stage('Build') {
-            nodejs(nodeJSInstallationName: 'nodejs') {
+            // nodejs(nodeJSInstallationName: 'nodejs') {
                 script.build()
-            }
+            // }
         }
 
         stage('Test') {
-            nodejs(nodeJSInstallationName: 'nodejs') {
+            // nodejs(nodeJSInstallationName: 'nodejs') {
                 script.test()
-            }
+            // }
         }
 
         currentBuild.result = 'SUCCESS'
