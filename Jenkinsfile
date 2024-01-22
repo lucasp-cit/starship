@@ -6,17 +6,17 @@ node() {
     def script = load('jenkins-build.groovy') as BuildScript
     def isMainBranch = releaseBranch || masterBranch
 
-    wrappers {
-        nodejs('nodejs') // Manage Jenkins -> Configure Tools -> NodeJS Installations -> Name
-    }
-
     try {
         stage('Build') {
-            script.build()
+            nodejs(nodeJSInstallationName: 'nodejs') {
+                script.build()
+            }
         }
 
         stage('Test') {
-            script.test()
+            nodejs(nodeJSInstallationName: 'nodejs') {
+                script.test()
+            }
         }
 
         currentBuild.result = 'SUCCESS'
