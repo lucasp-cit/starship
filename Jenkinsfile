@@ -1,99 +1,98 @@
-pipeline {
-    agent any
-    tools {
-        nodejs 'nodejs' // Check the name they set for this tool
+#!groovy
+
+node() {
+    checkout scm
+
+    def script = load('jenkins-build.groovy') as BuildScript
+    def isMainBranch = releaseBranch || masterBranch
+
+    wrappers {
+        nodejs('nodejs') // Manage Jenkins -> Configure Tools -> NodeJS Installations -> Name
     }
-    environment {
-        ARTIFACTORY_CREDENTIALS = credentials('ARTIFACTORY_CREDENTIALS')
-    }
-    stages {
+
+    try {
         stage('Build') {
-            steps {
-                sh '''
-                    echo ".......................Building......................."
-                    cd starship
-                    npm install
-                    npx nx run core:build
-                '''
-            }
+            script.build()
         }
+
         stage('Test') {
-            steps {
-                sh '''
-                    echo ".......................Testing......................."
-                    cd starship
-                    npx nx run core:test
-                    echo ".......................Linting......................."
-                    npx nx run core:lint
-                '''
-            }
+            script.test()
         }
-        stage('Deploy Dev') {
-            input {
-                message "Do you want to deploy to dev?"
-                ok "Yes"
-                parameters {
-                    string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
-                }
-            }
-            steps {
-                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
-                sh '''
-                    echo ".......................Deploying Dev......................."
-                    cd starship
-                    npx nx run core:publish --ver=$VERSION --userconfig=$ARTIFACTORY_CREDENTIALS
-                '''
+
+        currentBuild.result = 'SUCCESS'
+    } catch (e) {
+        currentBuild.result = 'FAILURE'
+        throw e
+    } finally {
+        if (isBuildBroken) {
+            echo "ERROR: ${committer} just broke the build!"
+        }
+
+        if (isBuildFixed) {
+            echo "INFO: ${committer} just repaired the build. Well done."
+        }
+    }
+
+    if (isMainBranch) {
+        def artifact = isMasterBranch() ? 'Snapshot' : 'Release'
+
+        if (releaseBranch) {
+            timeout(time: 30, unit: 'MINUTES') {
+                input "Please confirm release ${releaseNumberFromBranch}"
             }
         }
 
-        stage('Deploy Staging') {
-            input {
-                message "Do you want to deploy to staging?"
-                ok "Yes"
-                parameters {
-                    string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
-                }
-            }
-            steps {
-                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
-                sh '''
-                    echo ".......................Deploying Staging......................."
-                    cd starship
-                    npx nx run core:publish --ver=$VERSION --userconfig=$ARTIFACTORY_CREDENTIALS
-                '''
-            }
+        stage("Publish $artifact") {
+            script.publish()
         }
+    }
+}
 
-        stage('Deploy Production') {
-            input {
-                message "Do you want to deploy to production?"
-                ok "Yes"
-                parameters {
-                    string(name: 'VERSION', defaultValue: '0.0.1', description: 'Provide the version number')
-                }
-            }
-            steps {
-                writeFile file: 'starship/.npmrc', text: "$ARTIFACTORY_CREDENTIALS"
-                sh '''
-                    echo ".......................Deploying Production......................."
-                    cd starship
-                    npx nx run core:publish --ver=$VERSION --userconfig=$ARTIFACTORY_CREDENTIALS
-                '''
-            }
-        }
+interface BuildScript {
+    void build()
+    void test()
+    void publish()
+}
+
+String getCommitter() {
+    sh(returnStdout: true, script: "git log -n1 --pretty='%an'").trim()
+}
+
+boolean isMasterBranch() {
+    ['master', 'main'].contains(BRANCH_NAME)
+}
+
+boolean isDevelopBranch() {
+    ['develop', 'development', 'dev'].contains(BRANCH_NAME)
+}
+
+boolean isReleaseBranch() {
+    BRANCH_NAME.startsWith('release')
+}
+
+String getReleaseNumberFromBranch() {
+    def matcher = BRANCH_NAME =~ /release\/(.+)$/
+
+    if (!matcher.matches()) {
+        error("Release specifier not found in branchname: ${BRANCH_NAME}")
     }
-    post {
-        always {
-            echo 'I will always get executed :D'
-        }
-        success {
-            echo 'I will only get executed if this success'
-        }
-        failure {
-            echo 'I will only get executed if this fails'
-        }
-        unstable {
-            echo 'I will only get executed if this is unstable'
-        }
-    }
+
+    matcher.group(1)
+}
+
+void abort(String message) {
+    currentBuild.result = 'ABORTED'
+    throw new hudson.AbortException(message)
+}
+
+String getLastBuildStatus() {
+    currentBuild.previousBuiltBuild?.result
+}
+
+boolean getIsBuildFixed() {
+    currentBuild.result == 'SUCCESS' && lastBuildStatus == 'FAILURE'
+}
+
+boolean getIsBuildBroken() {
+    currentBuild.result == 'FAILURE' && lastBuildStatus == 'SUCCESS'
 }
