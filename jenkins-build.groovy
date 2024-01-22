@@ -10,15 +10,13 @@ void build() {
 }
 
 void test() {
-    try {
-        sh '''
-            echo ".......................Testing......................."
-            cd starship
-            npx nx run core:test
-            echo ".......................Linting......................."
-            npx nx run core:lint
-        '''
-    }
+    sh '''
+        echo ".......................Testing......................."
+        cd starship
+        npx nx run core:test
+        echo ".......................Linting......................."
+        npx nx run core:lint
+    '''
 }
 
 def publish() {
