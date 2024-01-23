@@ -28,12 +28,9 @@ def deploy(env) {
     // '''
 }
 
-def mergeOnMain() {
-    echo ".......................Merging on Main......................."
+def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
+    echo ".......................Merging and Creating tag ${releaseNumberFromBranch} on Main......................."
 }
 
-def createTagOnMain() {
-    echo ".......................Creating tag on Main......................."
-}
 
 return this

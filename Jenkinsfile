@@ -61,8 +61,7 @@ node() {
                 ok: "Yes"
             )
             nodejs('nodejs') {
-                script.mergeOnMain()
-                script.createTagOnMain()
+                script.mergeAndCreateTagOnMain(releaseNumberFromBranch)
             }
         }
     }
