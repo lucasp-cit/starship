@@ -58,7 +58,10 @@ node() {
         stage("Merge and create Tag on Main") {
             input( 
                 message: "Do you want to merge and create Tag on Main?",
-                ok: "Yes"
+                ok: "Yes",
+                parameters: [
+                    string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
+                ]
             )
             nodejs('nodejs') {
                 script.mergeAndCreateTagOnMain(releaseNumberFromBranch)
