@@ -38,7 +38,7 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     
     checkout([
         $class: 'GitSCM',
-        branches: [[name: 'main']],
+        branches: [[name: 'origin/main']],
         extensions: [
             [$class: 'CloneOption', noTags: false, reference: '', shallow: false]
         ],
