@@ -38,7 +38,7 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
         $class: 'GitSCM',
         branches: [[name: 'main']],
         extensions: [
-            [$class: 'CloneOption', noTags: true, reference: '', shallow: true]
+            [$class: 'CloneOption', noTags: false, reference: '', shallow: false]
         ],
         submoduleCfg: [],
         userRemoteConfigs: [
