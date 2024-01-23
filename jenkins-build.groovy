@@ -38,7 +38,7 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     
     checkout([
         $class: 'GitSCM',
-        branches: [[name: 'origin/main']],
+        branches: [[name: '**']],
         extensions: [
             [$class: 'CloneOption', noTags: false, reference: '', shallow: false]
         ],
@@ -48,15 +48,14 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
         ]
     ])
     
-    sh "git fetch"
-    sh "git checkout origin/main"
+    sh "git checkout main"
     sh "git status"
     sh "git branch"
     sh "git pull"
-    sh "git merge origin/release/${releaseNumberFromBranch}"
+    sh "git merge release/${releaseNumberFromBranch}"
     // sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
     // sh "git push origin tag/${releaseNumberFromBranch}"
-    sh "git push -f origin HEAD:main"
+    sh "git push origin main"
 }
 
 
