@@ -45,9 +45,9 @@ node() {
             input(
                 message: "Do you want to deploy",
                 ok: "Yes",
-                parameters: {
+                parameters: [
                     string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
-                }
+                ]
             )
             
             nodejs('nodejs') {
@@ -59,9 +59,9 @@ node() {
             input( 
                 message: "Do you want to deploy",
                 ok: "Yes",
-                parameters: {
+                parameters: [
                     string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
-                }
+                ]
             )
             nodejs('nodejs') {
                 script.deploy('prod')
