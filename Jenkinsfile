@@ -4,7 +4,6 @@ node() {
     checkout scm
 
     def script = load('jenkins-build.groovy') as BuildScript
-    def isMainBranch = releaseBranch || masterBranch
 
     try {
         stage('Build') {
@@ -33,16 +32,22 @@ node() {
         }
     }
 
-    if (isMainBranch) {
-        if (releaseBranch) {
-            timeout(time: 30, unit: 'MINUTES') {
-                input "Please confirm release version: ${releaseNumberFromBranch}"
+    if(developBranch){
+        stage("Deploy to Development") {
+            nodejs('nodejs') {
+                script.deploy('dev')
             }
+        }
+    }
 
-            stage("Publish to Staging") {
-                nodejs('nodejs') {
-                    script.deploy('staging')
-                }
+    if (releaseBranch) {
+        timeout(time: 30, unit: 'MINUTES') {
+            input "Please confirm release version: ${releaseNumberFromBranch}"
+        }
+
+        stage("Deploy to Staging") {
+            nodejs('nodejs') {
+                script.deploy('staging')
             }
         }
 
@@ -50,19 +55,18 @@ node() {
             input "Should we procced with the deploy to Production?"
         }
 
-        stage("Publish to Production") {
+        stage("Deploy to Production") {
             nodejs('nodejs') {
                 script.deploy('prod')
             }
         }
-        
-    } else {
-        stage("Publish to Development") {
-            nodejs('nodejs') {
-                script.deploy('dev')
-            }
-        }
     }
+
+    // TO-DO: create
+    if (masterBranch) {
+       
+    }
+    
 }
 
 interface BuildScript {
@@ -75,16 +79,16 @@ String getCommitter() {
     sh(returnStdout: true, script: "git log -n1 --pretty='%an'").trim()
 }
 
-boolean isMasterBranch() {
-    ['master', 'main'].contains(BRANCH_NAME)
+boolean isReleaseBranch() {
+    BRANCH_NAME.startsWith('release')
 }
 
 boolean isDevelopBranch() {
     ['develop', 'development', 'dev'].contains(BRANCH_NAME)
 }
 
-boolean isReleaseBranch() {
-    BRANCH_NAME.startsWith('release')
+boolean isMasterBranch() {
+    ['master', 'main'].contains(BRANCH_NAME)
 }
 
 String getReleaseNumberFromBranch() {
