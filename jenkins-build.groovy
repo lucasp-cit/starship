@@ -33,6 +33,8 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     
     sh 'git config --global credential.helper cache'
     sh 'git config --global push.default simple'
+    sh 'git config --global user.name "Lucas Polo"'
+    sh 'git config --global user.email "lucasp@ciandt.com"'
     
     checkout([
         $class: 'GitSCM',
