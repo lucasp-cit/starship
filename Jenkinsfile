@@ -41,21 +41,28 @@ node() {
     }
 
     if (releaseBranch) {
-        timeout(time: 30, unit: 'MINUTES') {
-            input "Please confirm release version: ${releaseNumberFromBranch}"
-        }
-
         stage("Deploy to Staging") {
+            input {
+                message "Do you want to deploy"
+                ok "Yes"
+                parameters {
+                    string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
+                }
+            }
+            
             nodejs('nodejs') {
                 script.deploy('staging')
             }
         }
 
-        timeout(time: 30, unit: 'MINUTES') {
-            input "Should we procced with the deploy to Production?"
-        }
-
         stage("Deploy to Production") {
+            input {
+                message "Do you want to deploy"
+                ok "Yes"
+                parameters {
+                    string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
+                }
+            }
             nodejs('nodejs') {
                 script.deploy('prod')
             }
