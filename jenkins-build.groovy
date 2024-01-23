@@ -50,7 +50,7 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     sh "git merge origin/release/${releaseNumberFromBranch}"
     // sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
     // sh "git push origin tag/${releaseNumberFromBranch}"
-    sh "git push origin"
+    sh "git push origin HEAD:main"
 }
 
 
