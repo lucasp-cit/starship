@@ -48,7 +48,8 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
         ]
     ])
     
-    sh "git checkout main"
+    sh "git checkout origin/release/${releaseNumberFromBranch}"
+    sh "git checkout origin/main"
     sh "git status"
     sh "git branch"
     sh "git pull"
