@@ -45,7 +45,7 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
             [ credentialsId: 'jenkinsGitToken', url: 'https://github.com/lucasp-cit/starship.git']
         ]
     ])
-    sh "git checkout main"
+    sh "git branch -a"
     // sh "git merge --squash release/${releaseNumberFromBranch}"
     // sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
     // sh "git push origin tag/${releaseNumberFromBranch}"
