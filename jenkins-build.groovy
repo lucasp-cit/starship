@@ -19,8 +19,13 @@ void test() {
     '''
 }
 
-def publish() {
-    echo 'Publishing done 😉'
+def deploy(env) {
+    echo ".......................Deploying to ${env}......................."
+    // sh '''
+    //     echo ".......................Deploying Dev......................."
+    //     cd starship
+    //     npx nx run core:publish --ver=$VERSION --userconfig=$ARTIFACTORY_CREDENTIALS
+    // '''
 }
 
 return this

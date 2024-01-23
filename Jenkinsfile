@@ -34,16 +34,33 @@ node() {
     }
 
     if (isMainBranch) {
-        def artifact = isMasterBranch() ? 'Snapshot' : 'Release'
-
         if (releaseBranch) {
             timeout(time: 30, unit: 'MINUTES') {
-                input "Please confirm release ${releaseNumberFromBranch}"
+                input "Please confirm release version: ${releaseNumberFromBranch}"
+            }
+
+            stage("Publish to Staging") {
+                nodejs('nodejs') {
+                    script.deploy('staging')
+                }
             }
         }
 
-        stage("Publish $artifact") {
-            script.publish()
+        timeout(time: 30, unit: 'MINUTES') {
+            input "Should we procced with the deploy to Production?"
+        }
+
+        stage("Publish to Production") {
+            nodejs('nodejs') {
+                script.deploy('prod')
+            }
+        }
+        
+    } else {
+        stage("Publish to Development") {
+            nodejs('nodejs') {
+                script.deploy('dev')
+            }
         }
     }
 }
@@ -51,7 +68,7 @@ node() {
 interface BuildScript {
     void build()
     void test()
-    void publish()
+    void deploy(String env)
 }
 
 String getCommitter() {
