@@ -30,6 +30,10 @@ def deploy(env) {
 
 def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     echo ".......................Merging and Creating tag ${releaseNumberFromBranch} on Main......................."
+    
+    sh 'git config --global credential.helper cache'
+    sh 'git config --global push.default simple'
+    
     checkout([
         $class: 'GitSCM',
         branches: [[name: 'main']],
@@ -42,9 +46,9 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
         ]
     ])
     sh "git checkout main"
-    sh "git merge --squash release/${releaseNumberFromBranch}"
-    sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
-    sh "git push origin tag/${releaseNumberFromBranch}"
+    // sh "git merge --squash release/${releaseNumberFromBranch}"
+    // sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
+    // sh "git push origin tag/${releaseNumberFromBranch}"
 }
 
 
