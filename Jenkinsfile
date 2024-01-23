@@ -3,7 +3,7 @@
 node() {
     checkout scm
 
-    def script = load('jenkins-build.groovy') as BuildScript
+    def script = load('jenkins-build.groovy')
 
     try {
         stage('Build') {
@@ -74,12 +74,6 @@ node() {
        
     }
     
-}
-
-interface BuildScript {
-    void build()
-    void test()
-    void deploy(String env)
 }
 
 String getCommitter() {
