@@ -42,13 +42,13 @@ node() {
 
     if (releaseBranch) {
         stage("Deploy to Staging") {
-            input {
-                message "Do you want to deploy"
-                ok "Yes"
-                parameters {
+            input(
+                message: "Do you want to deploy",
+                ok: "Yes",
+                parameters: {
                     string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
                 }
-            }
+            )
             
             nodejs('nodejs') {
                 script.deploy('staging')
@@ -56,13 +56,13 @@ node() {
         }
 
         stage("Deploy to Production") {
-            input {
-                message "Do you want to deploy"
-                ok "Yes"
-                parameters {
+            input( 
+                message: "Do you want to deploy",
+                ok: "Yes",
+                parameters: {
                     string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
                 }
-            }
+            )
             nodejs('nodejs') {
                 script.deploy('prod')
             }
