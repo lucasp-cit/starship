@@ -31,7 +31,7 @@ def deploy(env) {
 def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     
     sh '''
-        echo ".......................Merging and Creating tag $releaseNumberFromBranch on Main......................."
+        echo ".......................Merging and Creating tag ${releaseNumberFromBranch} on Main......................."
     '''
         //     git checkout main
         // git merge --squash release/$releaseNumberFromBranch
