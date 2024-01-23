@@ -28,4 +28,12 @@ def deploy(env) {
     // '''
 }
 
+def mergeOnMain() {
+    echo ".......................Merging on Main......................."
+}
+
+def createTagOnMain() {
+    echo ".......................Creating tag on Main......................."
+}
+
 return this

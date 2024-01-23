@@ -55,23 +55,28 @@ node() {
             }
         }
 
-        stage("Deploy to Production") {
+        stage("Merge on Main") {
             input( 
-                message: "Do you want to deploy",
-                ok: "Yes",
-                parameters: [
-                    string(name: 'VERSION', defaultValue: releaseNumberFromBranch, description: 'Provide the version number:')
-                ]
+                message: "Do you want to merge and create Tag on Main?",
+                ok: "Yes"
             )
             nodejs('nodejs') {
-                script.deploy('prod')
+                script.mergeOnMain()
+                script.createTagOnMain()
             }
         }
     }
 
-    // TO-DO: create
     if (masterBranch) {
-       
+        input( 
+            message: "Should we deploy to Production?",
+            ok: "Yes"
+        )
+        stage("Deploy to Production") {
+            nodejs('nodejs') {
+                script.deploy('prod')
+            }
+        }
     }
     
 }
