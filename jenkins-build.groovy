@@ -49,9 +49,9 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
     sh "git branch -a"
     sh "git checkout origin/main"
     sh "git status"
-    sh "git merge --squash release/${releaseNumberFromBranch}"
-    // sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
-    // sh "git push origin tag/${releaseNumberFromBranch}"
+    sh "git merge --squash origin/release/${releaseNumberFromBranch}"
+    sh "git tag -a tag/${releaseNumberFromBranch} -m \"Release Tag for version: ${${releaseNumberFromBranch}}\""
+    sh "git push origin tag/${releaseNumberFromBranch}"
 }
 
 
