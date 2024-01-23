@@ -38,7 +38,7 @@ def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
         ],
         submoduleCfg: [],
         userRemoteConfigs: [
-            [ credentialsId: 'lucasp-ciandt', url: 'https://github.com/lucasp-cit/starship.git']
+            [ credentialsId: 'jenkinsGitToken', url: 'https://github.com/lucasp-cit/starship.git']
         ]
     ])
     sh "git checkout main"
