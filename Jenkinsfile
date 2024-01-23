@@ -55,7 +55,7 @@ node() {
             }
         }
 
-        stage("Merge on Main") {
+        stage("Merge and create Tag on Main") {
             input( 
                 message: "Do you want to merge and create Tag on Main?",
                 ok: "Yes"

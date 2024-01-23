@@ -29,7 +29,14 @@ def deploy(env) {
 }
 
 def mergeAndCreateTagOnMain(releaseNumberFromBranch) {
-    echo ".......................Merging and Creating tag ${releaseNumberFromBranch} on Main......................."
+    
+    sh '''
+        echo ".......................Merging and Creating tag $releaseNumberFromBranch on Main......................."
+    '''
+        //     git checkout main
+        // git merge --squash release/$releaseNumberFromBranch
+        // git tag -a tagName -m \"Tag message\"
+        // git push origin tagName
 }
 
 
